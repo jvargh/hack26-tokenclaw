@@ -2,7 +2,7 @@
   "width": 1920,
   "height": 1080,
   "gifWidth": 1152,
-  "fps": 8,
+  "fps": 5,
   "leadInMs": 900,
   "defaultHoldMs": 2000,
   "tailHoldMs": 2400,
@@ -20,15 +20,15 @@
         },
         {
           "id": "BASELINE",
-          "text": "Ordinary agent: every incident to an advanced model — $15.00"
+          "text": "Ordinary agent sends every incident to an advanced model: $15.00"
         },
         {
           "id": "GRAB",
-          "text": "GRAB — execution intercepted before any inference"
+          "text": "GRAB: execution intercepted before any inference"
         },
         {
           "id": "PULL",
-          "text": "PULL — 110 reuse · 85 runbook · 40 small model · 15 advanced",
+          "text": "PULL: 110 reuse · 85 runbook · 40 small model · 15 advanced",
           "holdMs": 2600
         },
         {
@@ -38,11 +38,11 @@
         },
         {
           "id": "EXECUTE",
-          "text": "Governed execution — every lane metered to its own allowance"
+          "text": "Governed execution: every lane metered to its own allowance"
         },
         {
           "id": "HOLD",
-          "text": "HOLD — 3 production remediations require a human decision",
+          "text": "HOLD: 3 production remediations require a human decision",
           "holdMs": 2400
         },
         {
@@ -52,7 +52,7 @@
         },
         {
           "id": "OUTCOME",
-          "text": "243 incident resolutions verified — about one cent each",
+          "text": "243 incident resolutions verified, about one cent each",
           "holdMs": 2400
         },
         {
@@ -62,7 +62,7 @@
         },
         {
           "id": "LEARN",
-          "text": "LEARN — Incident-Triage-v9 proposed at 96% deterministic coverage",
+          "text": "LEARN: Incident-Triage-v9 proposed at 96% deterministic coverage",
           "holdMs": 2600
         }
       ]
@@ -74,19 +74,19 @@
       "beats": [
         {
           "id": "REQUEST",
-          "text": "Validate release candidate 7 — 2,400 validation operations"
+          "text": "Validate release candidate 7: 2,400 validation operations"
         },
         {
           "id": "BASELINE",
-          "text": "Ordinary agent: all 2,400 checks to an advanced model — $72.00"
+          "text": "Ordinary agent sends all 2,400 checks to an advanced model: $72.00"
         },
         {
           "id": "GRAB",
-          "text": "GRAB — intercepted before inference"
+          "text": "GRAB: intercepted before inference"
         },
         {
           "id": "PULL",
-          "text": "PULL — 330 reuse · 1,850 deterministic · 170 small · 50 advanced",
+          "text": "PULL: 330 reuse · 1,850 deterministic · 170 small · 50 advanced",
           "holdMs": 2600
         },
         {
@@ -100,7 +100,7 @@
         },
         {
           "id": "HOLD",
-          "text": "HOLD — deploying RC7 is a human decision, not a delegated one",
+          "text": "HOLD: deploying RC7 is a human decision, not a delegated one",
           "holdMs": 2400
         },
         {
@@ -110,7 +110,7 @@
         },
         {
           "id": "OUTCOME",
-          "text": "2,397 validation outcomes verified — under half a cent each",
+          "text": "2,397 validation outcomes verified, under half a cent each",
           "holdMs": 2400
         },
         {
@@ -120,10 +120,13 @@
         },
         {
           "id": "LEARN",
-          "text": "LEARN — Release-Assurance-v15 proposed at 98% coverage",
+          "text": "LEARN: Release-Assurance-v15 proposed at 98% coverage",
           "holdMs": 2600
         }
       ]
     }
-  ]
+  ],
+  "maxColors": 64,
+  "dither": "none",
+  "sizeLimitMb": 5
 }

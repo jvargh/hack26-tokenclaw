@@ -12,7 +12,7 @@
  */
 
 import { chromium } from 'playwright'
-import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync, copyFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import {
@@ -25,6 +25,12 @@ const BASE_URL = process.env.TOKENCLAW_URL ?? 'http://127.0.0.1:5174/'
 
 const spec = JSON.parse(readFileSync(join(here, 'gif-script.json'), 'utf8'))
 const { width, height, gifWidth, fps } = spec
+// Palette size and dithering are the two levers that decide GIF file size.
+// Dithering in particular adds per-pixel noise that defeats GIF's run-length
+// compression, so a flat UI encodes far smaller with it off.
+const maxColors = spec.maxColors ?? 64
+const dither = spec.dither ?? 'none'
+const sizeLimitMb = spec.sizeLimitMb ?? 5
 
 async function record(scenario) {
   const dir = join(BUILD, scenario.id)
@@ -113,17 +119,34 @@ async function toGif(scenario, capture) {
 
   await run(FFMPEG, [
     '-v', 'error', '-y', '-i', capture.raw,
-    '-vf', `${chain},palettegen=max_colors=160:stats_mode=diff`,
+    '-vf', `${chain},palettegen=max_colors=${maxColors}:stats_mode=diff`,
     palette,
   ], { cwd: capture.dir })
 
   const out = join(here, scenario.output)
+  // ffmpeg writes into the build directory it owns, then the result is copied to
+  // the repository root. On Windows a freshly written file is often still held
+  // briefly by an antivirus scanner or a preview pane, so the copy retries.
+  const staged = join(capture.dir, scenario.output)
   await run(FFMPEG, [
     '-v', 'error', '-y', '-i', capture.raw, '-i', palette,
-    '-lavfi', `${chain}[x];[x][1:v]paletteuse=dither=bayer:bayer_scale=3:diff_mode=rectangle`,
+    '-lavfi', `${chain}[x];[x][1:v]paletteuse=dither=${dither}:diff_mode=rectangle`,
     '-loop', '0',
-    out,
+    staged,
   ], { cwd: capture.dir })
+
+  let lastError
+  for (let attempt = 1; attempt <= 5; attempt++) {
+    try {
+      copyFileSync(staged, out)
+      lastError = undefined
+      break
+    } catch (error) {
+      lastError = error
+      await wait(600 * attempt)
+    }
+  }
+  if (lastError) throw new Error(`Could not write ${out}: ${lastError.message}`)
 
   return out
 }
@@ -149,9 +172,18 @@ async function main() {
   }
 
   console.log('Done:')
+  let oversize = 0
   for (const r of results) {
     if (!existsSync(r.out)) throw new Error(`Expected output missing: ${r.out}`)
-    console.log(`  ${r.out}  (${r.sizeMb.toFixed(1)} MB, ${(r.durMs / 1000).toFixed(1)}s)`)
+    const flag = r.sizeMb > sizeLimitMb ? `  OVER ${sizeLimitMb} MB LIMIT` : ''
+    if (flag) oversize++
+    console.log(`  ${r.out}  (${r.sizeMb.toFixed(2)} MB, ${(r.durMs / 1000).toFixed(1)}s)${flag}`)
+  }
+  if (oversize > 0) {
+    throw new Error(
+      `${oversize} GIF(s) exceed the ${sizeLimitMb} MB limit. ` +
+      'Lower gifWidth, fps or maxColors in gif-script.json.',
+    )
   }
 }
 

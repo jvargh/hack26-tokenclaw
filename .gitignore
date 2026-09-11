@@ -1,6 +1,3 @@
-_bkp/
-.github/
-
 # Operating systems
 .DS_Store
 .AppleDouble
@@ -216,3 +213,6 @@ docs/.vitepress/dist/
 
 # Internal TokenClaw working documents (concept, specs, presenter script)
 tokenclaw/_bkp/
+imgs/
+_bkp/
+.github/

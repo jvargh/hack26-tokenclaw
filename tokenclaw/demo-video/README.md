@@ -4,9 +4,9 @@ Produces the demo assets for the TokenClaw Execution Studio, all locally — no 
 
 | Asset | Scenario | Runtime | Size |
 |---|---|---|---|
-| `TokenClaw-Demo.mp4` | Customer Case Resolution | ~1:49 | ~9 MB |
-| `TokenClaw-IT-Incidents.gif` | IT Incident Resolution | ~33 s | ~9 MB |
-| `TokenClaw-Software-Validation.gif` | Software Validation | ~33 s | ~8 MB |
+| `TokenClaw-Demo.mp4` | Customer Case Resolution | ~1:48 | ~9 MB |
+| `TokenClaw-IT-Incidents.gif` | IT Incident Resolution | ~33 s | ~4.3 MB |
+| `TokenClaw-Software-Validation.gif` | Software Validation | ~33 s | ~4.3 MB |
 
 The MP4 is the narrated headline demo. The two GIFs are silent and captioned, and exist to show that the same Request → Learn lifecycle drives the other two domains.
 
@@ -55,9 +55,22 @@ This reuses the capture in `build/` and only redoes the caption burn and mux. Us
 | | MP4 | GIF |
 |---|---|---|
 | Resolution | 1920×1080 | 1152×648 |
-| Frame rate | 30 fps | 8 fps |
+| Frame rate | 30 fps | 5 fps |
+| Colours | full | 64, no dithering |
 | Audio | AAC 48 kHz stereo, −16 LUFS | none |
 | Captions | burned in | burned in |
+
+### Keeping GIFs under 5 MB
+
+Submission portals commonly cap attachments at 5 MB. Three levers control GIF size, in order of impact on this content:
+
+1. **Dithering.** `dither=none` is the single biggest win. Dithering adds per-pixel noise that defeats GIF run-length compression, and a flat dark UI does not need it. Turning it off took these files from 9.1 MB to 4.5 MB with no visible quality loss.
+2. **Frame rate.** The interface is static between phase transitions, so 5 fps reads the same as 8 and costs far less.
+3. **Palette size.** 64 colours is ample for this palette; 48 saves little more and starts to band.
+
+`gifWidth` is the last lever to touch, because it directly costs text legibility. At 1152 the burned captions and UI labels stay readable.
+
+The renderer enforces `sizeLimitMb` (default 5) and fails with a clear error rather than silently shipping an oversized file.
 
 ## How it works
 
@@ -75,7 +88,7 @@ Playwright begins writing frames slightly *after* the browser context is created
 ## Editing the scripts
 
 - **`video-script.json`** — spoken narration for the MP4. Knobs: `voice`, `rate`, `leadInMs`, `beatGapMs`, `tailHoldMs`. The renderer prints the projected runtime before recording and warns if the result exceeds 2:00.
-- **`gif-script.json`** — captions and per-phase holds for the GIFs. Knobs: `gifWidth`, `fps`, `defaultHoldMs`, and a per-beat `holdMs` override. Lower `gifWidth` or `fps` to shrink the files.
+- **`gif-script.json`** — captions and per-phase holds for the GIFs. Knobs: `gifWidth`, `fps`, `maxColors`, `dither`, `defaultHoldMs`, `sizeLimitMb`, and a per-beat `holdMs` override. See the size guidance above before changing these.
 
 Each beat's `id` must match a phase the renderer knows how to drive; see `beatActions` in [`lib.mjs`](lib.mjs).
 
