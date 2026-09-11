@@ -1,0 +1,35 @@
+:root {
+  font-family: Inter, "Segoe UI", system-ui, sans-serif;
+  color: #f2efe6;
+  background: #090c0d;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  --bg: #090c0d;
+  --surface: #111617;
+  --surface-2: #171d1f;
+  --surface-3: #20282b;
+  --line: #2e393d;
+  --line-soft: #222b2e;
+  --text: #f2efe6;
+  --muted: #8c999c;
+  --muted-2: #647074;
+  --claw: #ff6b2c;
+  --claw-soft: rgba(255, 107, 44, 0.14);
+  --green: #68d780;
+  --green-soft: rgba(104, 215, 128, 0.12);
+  --amber: #efb84e;
+  --amber-soft: rgba(239, 184, 78, 0.12);
+  --red: #ff6262;
+  --red-soft: rgba(255, 98, 98, 0.13);
+  --blue: #6faeff;
+  --mono: "Cascadia Code", "SFMono-Regular", Consolas, monospace;
+}
+
+* { box-sizing: border-box; }
+html, body { min-width: 1180px; min-height: 100%; background: var(--bg); }
+body { margin: 0; overflow-x: auto; }
+button, select { font: inherit; }
+button { color: inherit; }
+button:focus-visible, select:focus-visible { outline: 2px solid #b9ddff; outline-offset: 2px; }
+#root { min-height: 100vh; }

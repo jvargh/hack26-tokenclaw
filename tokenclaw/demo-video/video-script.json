@@ -1,0 +1,65 @@
+{
+  "scenario": "casework",
+  "voice": "Microsoft Mark",
+  "rate": 1,
+  "leadInMs": 700,
+  "beatGapMs": 700,
+  "tailHoldMs": 2600,
+  "beats": [
+    {
+      "id": "REQUEST",
+      "caption": "An economic execution gateway",
+      "speech": "TokenClaw is an economic execution gateway. A request arrives: resolve one thousand customer support cases. Nothing has executed yet."
+    },
+    {
+      "id": "BASELINE",
+      "caption": "The ordinary agent baseline",
+      "speech": "An ordinary agent would send all one thousand cases to an advanced model. Forty dollars, every case treated as if it were novel."
+    },
+    {
+      "id": "GRAB",
+      "caption": "GRAB — intercept before inference",
+      "speech": "TokenClaw grabs that plan before a single token is spent. Intercepted before inference, not reported afterwards."
+    },
+    {
+      "id": "PULL",
+      "caption": "PULL — down the execution ladder",
+      "speech": "The claw pulls the work down the execution ladder. Four hundred and twenty cases reuse verified outcomes at no cost. Three hundred and ninety run deterministically. Only forty exceptions ever reach advanced reasoning."
+    },
+    {
+      "id": "WARRANT",
+      "caption": "The AI Spend Warrant",
+      "speech": "The plan becomes an A.I. Spend Warrant: six dollars twenty against an eight dollar budget, a ninety eight percent quality floor, and eight human decisions reserved."
+    },
+    {
+      "id": "EXECUTE",
+      "caption": "Governed execution",
+      "speech": "Execution runs inside the warrant. Every lane is metered against its own allowance, and cannot exceed it."
+    },
+    {
+      "id": "HOLD",
+      "caption": "HOLD — the human control point",
+      "speech": "Here it stops. Eight cases require customer refunds. Policy demands a human decision, and model confidence does not override it."
+    },
+    {
+      "id": "HOLD_DECISION",
+      "caption": "Decision recorded against the warrant",
+      "speech": "The decision is recorded against the warrant. In this mock, the approval is simulated."
+    },
+    {
+      "id": "OUTCOME",
+      "caption": "Verified business outcomes",
+      "speech": "Nine hundred and sixty seven outcomes, independently verified. Not tokens consumed. Six dollars twenty for nine hundred and sixty seven resolved cases: under a cent each."
+    },
+    {
+      "id": "CAPACITY",
+      "caption": "Avoided spend becomes capacity",
+      "speech": "Thirty three dollars eighty was never spent. That is recovered capacity, funding five thousand four hundred and fifty one more cases from the very same budget."
+    },
+    {
+      "id": "LEARN",
+      "caption": "LEARN — capability compounds",
+      "speech": "And it learns. Seven of nine steps ran without a model, proposed as a certified capability at ninety seven percent coverage. Every run makes the next one cheaper."
+    }
+  ]
+}

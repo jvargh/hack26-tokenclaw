@@ -1,0 +1,14 @@
+{
+  "name": "tokenclaw-demo-video",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Renders a narrated MP4 walkthrough of the TokenClaw Execution Studio mock.",
+  "scripts": {
+    "render": "node render.mjs",
+    "render:gif": "node render-gif.mjs"
+  },
+  "devDependencies": {
+    "playwright": "^1.49.0"
+  }
+}
